@@ -27,7 +27,7 @@ validpgpkeys=(
   'C7E7849466FE2358343588377258734B41C31549'  # David Runge <dvzrv@archlinux.org>
 )
 sha256sums=('SKIP'
-            '78a2d1d9896ec511dce3ae3c9f95967e2df18b23e6f97f60d90a0323a1419376'
+            'SKIP'
             'SKIP'
             
             )
@@ -64,7 +64,7 @@ prepare() {
 build() {
   cd $_srcname
   make LLVM=1 all
-  make LLVM=1 htmldocs
+  #make LLVM=1 htmldocs
 }
 
 _package() {
