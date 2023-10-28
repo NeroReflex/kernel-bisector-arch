@@ -1,0 +1,25 @@
+From 5d74ee5648e825111904d7dbef5cf38c49ff514a Mon Sep 17 00:00:00 2001
+From: Denis <benato.denis96@gmail.com>
+Date: Sat, 28 Oct 2023 21:42:30 +0200
+Subject: [PATCH] Fix needing long double
+
+---
+ drivers/usb/dwc2/hcd_queue.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/usb/dwc2/hcd_queue.c b/drivers/usb/dwc2/hcd_queue.c
+index 621a4846bd05..0779ce817120 100644
+--- a/drivers/usb/dwc2/hcd_queue.c
++++ b/drivers/usb/dwc2/hcd_queue.c
+@@ -59,7 +59,7 @@
+ #define DWC2_UNRESERVE_DELAY (msecs_to_jiffies(5))
+ 
+ /* If we get a NAK, wait this long before retrying */
+-#define DWC2_RETRY_WAIT_DELAY (1 * 1E6L)
++#define DWC2_RETRY_WAIT_DELAY (1 * 1E6)
+ 
+ /**
+  * dwc2_periodic_channel_available() - Checks that a channel is available for a
+-- 
+2.42.0
+

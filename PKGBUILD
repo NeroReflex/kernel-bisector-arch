@@ -4,7 +4,7 @@ pkgbase=linux
 pkgver=5.14.1.arch1
 pkgrel=1
 pkgdesc='Linux'
-_srctag=v${pkgver%.*}-${pkgver##*.}
+_srctag=e610ab8323e2278fdf9e9f83eb56183d373257be
 url="https://github.com/archlinux/linux/commits/$_srctag"
 arch=(x86_64)
 license=(GPL2)
@@ -16,8 +16,9 @@ makedepends=(
 options=('!strip')
 _srcname=archlinux-linux
 source=(
-  "$_srcname::git+https://github.com/archlinux/linux?signed#tag=$_srctag"
+  "$_srcname::git+https://github.com/torvalds/linux.git#commit=$_srctag"
   config         # the main kernel config file
+  0001-Fix-needing-long-double.patch
 )
 validpgpkeys=(
   'ABAF11C65A2970B130ABE3C479BE3E4300411886'  # Linus Torvalds
@@ -26,7 +27,10 @@ validpgpkeys=(
   'C7E7849466FE2358343588377258734B41C31549'  # David Runge <dvzrv@archlinux.org>
 )
 sha256sums=('SKIP'
-            '78a2d1d9896ec511dce3ae3c9f95967e2df18b23e6f97f60d90a0323a1419376')
+            '78a2d1d9896ec511dce3ae3c9f95967e2df18b23e6f97f60d90a0323a1419376'
+            'SKIP'
+            
+            )
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -51,16 +55,16 @@ prepare() {
 
   echo "Setting config..."
   cp ../config .config
-  make olddefconfig
+  make LLVM=1 olddefconfig
 
-  make -s kernelrelease > version
+  make LLVM=1 -s kernelrelease > version
   echo "Prepared $pkgbase version $(<version)"
 }
 
 build() {
   cd $_srcname
-  make all
-  make htmldocs
+  make LLVM=1 all
+  make LLVM=1 htmldocs
 }
 
 _package() {
